@@ -5,20 +5,41 @@
 </head>
 <body>
 
-    <h1>Student Registration Form</h1>
+<h1>Student Registration Form</h1>
 
-    <form action="/submit" method="POST">
-        <label>Name:</label>
-        <input type="text" name="name" required><br><br>
+<form action="/submit" method="POST" onsubmit="return validateForm()">
 
-        <label>Email:</label>
-        <input type="email" name="email" required><br><br>
+    <label>Name:</label>
+    <input type="text" id="name" name="name"><br><br>
 
-        <label>Course:</label>
-        <input type="text" name="course" required><br><br>
+    <label>Email:</label>
+    <input type="email" id="email" name="email"><br><br>
 
-        <button type="submit">Submit</button>
-    </form>
+    <label>Course:</label>
+    <input type="text" id="course" name="course"><br><br>
+
+    <label>Age:</label>
+    <input type="number" id="age" name="age"><br><br>
+
+    <button type="submit">Submit</button>
+
+</form>
+
+<script>
+function validateForm() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let course = document.getElementById("course").value;
+    let age = document.getElementById("age").value;
+
+    if (name === "" || email === "" || course === "" || age === "") {
+        alert("All fields are required!");
+        return false;
+    }
+
+    return true;
+}
+</script>
 
 </body>
 </html>
