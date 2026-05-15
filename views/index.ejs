@@ -16,27 +16,24 @@
         .hero {
             color: white;
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px;
         }
 
         .card {
             border-radius: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: scale(1.02);
         }
 
         .feature-box {
             background: white;
             padding: 20px;
             border-radius: 15px;
-            transition: 0.3s;
         }
 
-        .feature-box:hover {
-            transform: translateY(-5px);
+        #preview {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -49,69 +46,89 @@
 </nav>
 
 <section class="hero">
-    <h1>Welcome to Student Registration Portal</h1>
-    <p>Register for your course easily</p>
+    <h1>Advanced Registration Portal</h1>
+    <p>Task 4 Dynamic Validation</p>
 </section>
 
-<div class="container mb-5">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
 
             <div class="card shadow p-4">
-                <h3 class="text-center mb-4">Register Now</h3>
+                <h3 class="text-center mb-4">Register</h3>
 
                 <form action="/submit" method="POST" onsubmit="return validateForm()">
 
-                    <input type="text" id="name" name="name" class="form-control mb-3" placeholder="Full Name">
+                    <input type="text" id="name" name="name" class="form-control mb-3"
+                        placeholder="Full Name" oninput="updatePreview()">
 
-                    <input type="email" id="email" name="email" class="form-control mb-3" placeholder="Email Address">
+                    <input type="email" id="email" name="email" class="form-control mb-3"
+                        placeholder="Email" oninput="updatePreview()">
 
-                    <input type="text" id="course" name="course" class="form-control mb-3" placeholder="Course Name">
+                    <input type="text" id="course" name="course" class="form-control mb-3"
+                        placeholder="Course" oninput="updatePreview()">
 
-                    <input type="number" id="age" name="age" class="form-control mb-3" placeholder="Age">
+                    <input type="number" id="age" name="age" class="form-control mb-3"
+                        placeholder="Age" oninput="updatePreview()">
 
-                    <button class="btn btn-primary w-100">Submit</button>
+                    <input type="password" id="password" class="form-control mb-3"
+                        placeholder="Password">
+
+                    <small id="passwordMsg"></small>
+
+                    <button class="btn btn-primary w-100 mt-3">Submit</button>
                 </form>
+
+                <div id="preview">
+                    <h5>Live Preview</h5>
+                    <p>Name: <span id="pname">-</span></p>
+                    <p>Email: <span id="pemail">-</span></p>
+                    <p>Course: <span id="pcourse">-</span></p>
+                    <p>Age: <span id="page">-</span></p>
+                </div>
+
             </div>
 
         </div>
     </div>
 </div>
 
-<section class="container mb-5">
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="feature-box shadow">
-                <h4>Responsive Design</h4>
-                <p>Works on desktop, tablet, and mobile devices.</p>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="feature-box shadow">
-                <h4>Fast Registration</h4>
-                <p>Simple and easy registration workflow.</p>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="feature-box shadow">
-                <h4>Secure Validation</h4>
-                <p>Client and server side validation included.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 <script>
+function updatePreview() {
+    document.getElementById("pname").innerText =
+        document.getElementById("name").value || "-";
+
+    document.getElementById("pemail").innerText =
+        document.getElementById("email").value || "-";
+
+    document.getElementById("pcourse").innerText =
+        document.getElementById("course").value || "-";
+
+    document.getElementById("page").innerText =
+        document.getElementById("age").value || "-";
+}
+
+document.getElementById("password").addEventListener("input", function() {
+    let password = this.value;
+    let msg = document.getElementById("passwordMsg");
+
+    if (password.length < 6) {
+        msg.innerText = "Weak password";
+        msg.style.color = "red";
+    } else {
+        msg.innerText = "Strong password";
+        msg.style.color = "green";
+    }
+});
+
 function validateForm() {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let course = document.getElementById("course").value;
     let age = document.getElementById("age").value;
 
-    if (name === "" || email === "" || course === "" || age === "") {
-        alert("All fields are required!");
+    if (!name || !email || !course || !age) {
+        alert("All fields required");
         return false;
     }
 
